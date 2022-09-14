@@ -24,7 +24,7 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/lambda.zip"
 }
 
-resource "aws_s3_bucket_object" "lambda_file_upload" {
+resource "aws_s3_object" "lambda_file_upload" {
   bucket = aws_s3_bucket.s3_bucket.id
   key    = "lambda.zip"
   source = data.archive_file.lambda_zip.output_path
@@ -35,8 +35,8 @@ resource "aws_lambda_function" "lambda" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "handler.lambda_function"
 
-  s3_bucket   = var.bucket_name
-  s3_key      = aws_s3_bucket_object.lambda_file_upload.key
+  s3_bucket   = aws_s3_bucket.s3_bucket.id
+  s3_key      = aws_s3_object.lambda_file_upload.key
 
   runtime = "python3.7"
 }
