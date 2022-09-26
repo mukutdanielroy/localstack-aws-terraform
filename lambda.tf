@@ -39,4 +39,10 @@ resource "aws_lambda_function" "lambda" {
   s3_key      = aws_s3_object.lambda_file_upload.key
 
   runtime = "python3.7"
+
+  environment {
+    variables = {
+      BUCKET_NAME = var.bucket_name
+    }
+  }
 }
