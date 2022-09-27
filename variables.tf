@@ -32,3 +32,8 @@ variable "api_gateway_name" {
   type = string
   description = "apigateway name"
 }
+
+variable "queue_name" {
+  type = string
+  description = "queue name"
+}

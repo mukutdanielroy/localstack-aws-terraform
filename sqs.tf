@@ -1,5 +1,5 @@
 resource "aws_sqs_queue" "queue" {
-  name = "s3-event-notification-queue"
+  name = var.queue_name
 
   policy = <<POLICY
 {
@@ -9,7 +9,7 @@ resource "aws_sqs_queue" "queue" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "sqs:SendMessage",
-      "Resource": "arn:aws:sqs:*:*:s3-event-notification-queue",
+      "Resource": "arn:aws:sqs:*:*:${var.queue_name}",
       "Condition": {
         "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.s3_bucket.arn}" }
       }
