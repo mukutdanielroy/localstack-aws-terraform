@@ -5,6 +5,7 @@ from botocore.exceptions import ClientError
 import os
 
 def lambda_function(event, context):
+    print(event)
     if event.get('httpMethod') == 'GET' and event.get('queryStringParameters'):
         file_name = str(event.get('queryStringParameters'))
         response = create_presigned_url(os.environ['BUCKET_NAME'], file_name)
